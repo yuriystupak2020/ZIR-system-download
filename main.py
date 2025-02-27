@@ -152,7 +152,94 @@ def home():
         'service': 'Secure Download API',
         'version': '1.0.0'
     })
+@app.route('/list-files', methods=['POST'])
+@limiter.limit(CONFIG['RATE_LIMIT'])
+def list_files():
+    data = request.json
+    device_id = data.get('device_id')
+    timestamp = data.get('timestamp')
+    signature = data.get('signature')
+    ip_address = request.remote_addr
 
+    # Проверка обязательных параметров
+    if not all([device_id, timestamp, signature]):
+        return jsonify({'error': 'Missing required parameters'}), 400
+
+    # Проверка геолокации
+    if not security.check_location(ip_address):
+        security.send_alert(
+            f"Suspicious access from {ip_address} for device {device_id}"
+        )
+        return jsonify({'error': 'Access denied by location'}), 403
+
+    # Проверка подписи
+    if not security.verify_signature(device_id, timestamp, signature):
+        security.record_failed_attempt(device_id)
+        security.send_alert(
+            f"Invalid signature from device {device_id} at {ip_address}"
+        )
+        return jsonify({'error': 'Invalid signature'}), 403
+
+    # Проверка rate limit
+    if not security.check_rate_limit(device_id):
+        security.send_alert(
+            f"Rate limit exceeded for device {device_id} at {ip_address}"
+        )
+        return jsonify({'error': 'Too many attempts'}), 429
+
+    # Инициализируем Firestore
+    db = firestore.Client()
+    
+    # Получаем информацию о доступных файлах для устройства
+    try:
+        # Проверяем наличие устройства в базе
+        device_ref = db.collection('devices').document(device_id)
+        device_doc = device_ref.get()
+        
+        if not device_doc.exists:
+            # Устройство не зарегистрировано
+            return jsonify({'error': 'Device not registered'}), 403
+            
+        device_data = device_doc.to_dict()
+        
+        # Проверяем, активно ли устройство
+        if not device_data.get('active', False):
+            return jsonify({'error': 'Device is not active'}), 403
+            
+        # Получаем список файлов, доступных для этого устройства
+        files_query = db.collection('device_files').where('device_id', '==', device_id)
+        files = []
+        
+        for doc in files_query.stream():
+            file_data = doc.to_dict()
+            files.append({
+                'file_key': file_data.get('file_key'),
+                'name': file_data.get('name', file_data.get('file_key')),
+                'size': file_data.get('size', 0),
+                'updated_at': file_data.get('updated_at', None)
+            })
+            
+        # Логируем запрос списка файлов
+        bucket_name = os.environ.get('GCS_BUCKET_NAME', 'your-bucket-name')
+        manager = SecureDownloadManager(bucket_name)
+        manager.log_security_event(
+            'list_files_request',
+            device_id,
+            ip_address,
+            f"Files returned: {len(files)}"
+        )
+        
+        return jsonify({
+            'files': files,
+            'device': {
+                'name': device_data.get('name', 'Unknown Device'),
+                'type': device_data.get('type', 'Unknown')
+            }
+        })
+        
+    except Exception as e:
+        logging.error(f"Error retrieving file list: {str(e)}")
+        return jsonify({'error': 'Failed to retrieve file list'}), 500
 
 if __name__ == '__main__':
     # Используется только при локальном запуске

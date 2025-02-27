@@ -1,18 +1,3 @@
-# Установка зависимостей
-pip install -r requirements.txt
-
-# Запуск клиента
-python raspberry_client.py
-
-
-На Raspberry Pi устанавливается только:
-raspberry_client.py    # Клиентский код
-requirements.txt       # Зависимости для клиента:
-- requests
-- cryptography
-
-
-
 Сделайте файл авто-обновления исполняемым:
 chmod +x auto_updater.py
 
@@ -31,6 +16,8 @@ source venv/bin/activate
 
 Для запуска клиента для скачивания отдельного файла:
 python raspberry_client.py --server https://your-server.com --key your-secret-key --file example-file.zip
+
+https://encoded-shape-452012-k8.lm.r.appspot.com     fhX7tG9yZN2w8kL5vQ3pP6mD1rJ4sA0uB9cE2xF3
 
 Для запуска скрипта автообновления:
 ./auto_updater.py --setup
