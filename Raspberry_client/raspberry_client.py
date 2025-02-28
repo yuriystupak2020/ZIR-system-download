@@ -139,7 +139,8 @@ class SecureDownloadClient:
                     self.logger.info(f"Получен URL для скачивания, начинаем скачивание")
                     
                     # Скачивание файла с поддержкой больших файлов
-                    return self._download_large_file(download_url, output_path)
+                    # return self._download_large_file(download_url, output_path)
+                    return self._download_large_file(download_url, output_path, file_key)
                     
                 elif response.status_code == 403:
                     error = response.json().get('error', 'Unknown error')
@@ -161,7 +162,8 @@ class SecureDownloadClient:
         self.logger.error("Превышено максимальное количество попыток скачивания")
         return False
         
-    def _download_large_file(self, url, output_path, chunk_size=8192):
+    # def _download_large_file(self, url, output_path, chunk_size=8192):
+    def _download_large_file(self, url, output_path, file_key=None, chunk_size=8192):
         """
         Скачивание файла чанками для поддержки больших файлов
         
@@ -235,6 +237,9 @@ class SecureDownloadClient:
             # Удаляем временный файл в случае ошибки
             if os.path.exists(temp_file):
                 os.remove(temp_file)
+            
+            if file_key:
+                self._log_download_info(file_key, output_path, file_size)
                 
             return False
             
@@ -276,6 +281,12 @@ class SecureDownloadClient:
             {
                 'file_key': 'test-file.txt',  # Имя файла, которое мы нашли в бакете
                 'name': 'Test File',          # Отображаемое имя (может быть любым)
+                'size': 0,                    # Размер файла (не обязательно указывать точно)
+                'updated_at': datetime.now().isoformat()  # Время последнего обновления
+            },
+            {
+                'file_key': 'test-file2.txt',  # Имя файла, которое мы нашли в бакете
+                'name': 'test-file2.txt',          # Отображаемое имя (может быть любым)
                 'size': 0,                    # Размер файла (не обязательно указывать точно)
                 'updated_at': datetime.now().isoformat()  # Время последнего обновления
             }
