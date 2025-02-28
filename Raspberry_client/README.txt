@@ -63,3 +63,11 @@ sudo systemctl start cloud-updater.service
 
 # Проверьте статус сервиса
 sudo systemctl status cloud-updater.service
+
+------------------------------------------------------------
+./auto_updater.py --check-now
+
+#айди росбери узнать
+(venv) pi@raspberrypi:~/auto-loader $ python3 -c "import os; print(''.join([line.split(':')[1].strip() for line in open('/proc/cpuinfo') if line.startswith('Serial')]))"
+f270e2abbeb3e872
+

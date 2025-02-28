@@ -266,39 +266,83 @@ class SecureDownloadClient:
             
     def check_available_files(self):
         """
-        Запрашивает список доступных файлов с сервера
+        Возвращает список доступных файлов для скачивания
         
         Returns:
-            list: Список доступных файлов или None в случае ошибки
+            list: Предопределенный список файлов
         """
-        timestamp = str(int(time.time()))
-        signature = self.generate_signature(timestamp)
+        # Используем предопределенный список файлов из бакета
+        files = [
+            {
+                'file_key': 'test-file.txt',  # Имя файла, которое мы нашли в бакете
+                'name': 'Test File',          # Отображаемое имя (может быть любым)
+                'size': 0,                    # Размер файла (не обязательно указывать точно)
+                'updated_at': datetime.now().isoformat()  # Время последнего обновления
+            }
+        ]
         
-        try:
-            response = requests.post(
-                f"{self.server_url}/list-files",  # Этот эндпоинт нужно добавить на сервере
-                json={
-                    'device_id': self.device_id,
-                    'timestamp': timestamp,
-                    'signature': signature
-                },
-                headers={'User-Agent': f'RaspberryPi/{self.device_id}'},
-                timeout=30
-            )
+        self.logger.info(f"Используем предопределенный список файлов: {len(files)} файлов")
+        return files
+        # """
+        # Запрашивает список доступных файлов с сервера
+        
+        # Returns:
+        #     list: Список доступных файлов или None в случае ошибки
+        # """
+        # timestamp = str(int(time.time()))
+        # signature = self.generate_signature(timestamp)
+        
+        # self.logger.info(f"Запрос списка файлов. Device ID: {self.device_id}")
+        # self.logger.info(f"Timestamp: {timestamp}")
+        # self.logger.info(f"Signature: {signature}")
+        
+        # try:
+        #     # url = f"{self.server_url}/list-files"
+        #     url = f"{self.server_url}/request-download"
+        #     self.logger.info(f"URL запроса: {url}")
             
-            if response.status_code == 200:
-                files = response.json().get('files', [])
-                self.logger.info(f"Получен список доступных файлов: {len(files)} файлов")
-                return files
-            else:
-                error = response.json().get('error', f"HTTP error: {response.status_code}")
-                self.logger.error(f"Ошибка при получении списка файлов: {error}")
-                return None
+        #     payload = {
+        #         'device_id': self.device_id,
+        #         'timestamp': timestamp,
+        #         'signature': signature
+        #     }
+            
+        #     self.logger.info(f"Отправляемые данные: {json.dumps(payload)}")
+            
+        #     response = requests.post(
+        #         url,
+        #         json=payload,
+        #         headers={'User-Agent': f'RaspberryPi/{self.device_id}'},
+        #         timeout=30
+        #     )
+            
+        #     self.logger.info(f"Код ответа: {response.status_code}")
+        #     self.logger.info(f"Тело ответа: {response.text}")
+            
+        #     # Безопасный парсинг JSON
+        #     if response.text.strip():
+        #         try:
+        #             data = response.json()
+                    
+        #             if response.status_code == 200:
+        #                 files = data.get('files', [])
+        #                 self.logger.info(f"Получен список доступных файлов: {len(files)} файлов")
+        #                 return files
+        #             else:
+        #                 error = data.get('error', f"HTTP error: {response.status_code}")
+        #                 self.logger.error(f"Ошибка при получении списка файлов: {error}")
+        #         except json.JSONDecodeError as e:
+        #             self.logger.error(f"Не удалось распарсить JSON ответа: {str(e)}")
+        #     else:
+        #         self.logger.error("Получен пустой ответ от сервера")
                 
-        except Exception as e:
-            self.logger.error(f"Ошибка при запросе списка файлов: {str(e)}")
-            return None
-
+        #     return None
+                
+        # except Exception as e:
+        #     self.logger.error(f"Ошибка при запросе списка файлов: {str(e)}")
+        #     import traceback
+        #     self.logger.error(f"Трассировка: {traceback.format_exc()}")
+        #     return None
 
 # Пример использования
 if __name__ == "__main__":
