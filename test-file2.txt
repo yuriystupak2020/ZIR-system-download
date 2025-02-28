@@ -1,1 +1,1 @@
-Содержимое второго тестового файла
+content of second test file2
