@@ -41,7 +41,8 @@ class SecureDownloadManager:
                 return None
             
             # Создаем URL с временным токеном доступа
-            url = f"https://storage.googleapis.com/{self.bucket_name}/{file_key}"
+            # url = f"https://storage.googleapis.com/{self.bucket_name}/{file_key}"
+            url = f"https://storage.googleapis.com/{self.bucket_name}/{file_key}?t={int(time.time())}"
             
             # Логируем скачивание в Firestore
             self.log_download(device_id, file_key)
