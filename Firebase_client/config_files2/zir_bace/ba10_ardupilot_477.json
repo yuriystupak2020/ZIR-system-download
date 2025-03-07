@@ -1,0 +1,28 @@
+{
+    "name": "Zir Bace Analog 10 inch Ardupilot",
+    "product_line": "Zir Bace",
+    "connection_type": "Analog",
+    "size": "10 inch",
+    "flight_controller": "Ardupilot",
+    "camera": "Sony IMX477",
+    "settings": {
+        "pid": {
+            "p_gain": 1.5,
+            "i_gain": 0.5,
+            "d_gain": 0.2
+        },
+        "rates": {
+            "roll_rate": 720,
+            "pitch_rate": 720,
+            "yaw_rate": 650
+        },
+        "filters": {
+            "gyro_lpf": "90Hz",
+            "dterm_lpf": "100Hz"
+        }
+    },
+    "firmware": {
+        "version": "1.0.0",
+        "release_date": "2024-03-01"
+    }
+}
