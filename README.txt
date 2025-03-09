@@ -1,3 +1,6 @@
+это базовый URL для доступа к публичным файлам, хранящимся в Google Cloud Storage.:
+https://storage.googleapis.com/encoded-shape-452012-k8-secure-downloads/test-file.txt
+
 add file:
 echo "File for raspberry Olega2" > test-fileOleg2.txt
 gsutil cp test-fileOleg2.txt gs://encoded-shape-452012-k8-secure-downloads/
