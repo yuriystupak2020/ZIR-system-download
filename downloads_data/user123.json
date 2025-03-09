@@ -1,5 +1,5 @@
 {
-    "downloads": 40,
+    "downloads": 70,
     "files": [
         "zir_ai/aa7_pixhawk_219.json",
         "zir_bace/bd10_naza_219.json",
@@ -32,5 +32,5 @@
         "zir_ai/ad15_ardupilot_477.json",
         "zir_ai/ad5_dji_477.json"
     ],
-    "last_download": "2025-03-09T14:05:41.370748"
+    "last_download": "2025-03-09T19:04:17.208748"
 }
