@@ -12,7 +12,7 @@ CONFIG_DIR = "Firebase_client/config_files2"
 DOWNLOADS_DIR = "downloads_data"
 
 # Максимальное количество скачиваний для одного клиента
-MAX_DOWNLOADS = 10
+MAX_DOWNLOADS = 100
 
 def ensure_directories():
     """Создание необходимых директорий, если они отсутствуют"""

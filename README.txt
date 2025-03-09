@@ -28,6 +28,10 @@ python simple-download-client.py --server http://localhost:5000 --client user123
 # Скачать конкретный файл (указав путь из списка файлов)
 python simple-download-client.py --server http://localhost:5000 --client user123 --file zir_ai/aa7_pixhawk_219.json
 
+# Скачать все файлы
+python simple-download-client.py --server http://localhost:5000 --client user123 --all
+python simple-download-client.py --server http://localhost:5000 --client user123 --all --dir zir_ai/
+
 # Скачать файл и сохранить его под другим именем
 python simple-download-client.py --server http://localhost:5000 --client user123 --file zir_ai/aa7_pixhawk_219.json --output my-config.json
 

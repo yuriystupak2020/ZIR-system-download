@@ -1,7 +1,36 @@
 {
-    "downloads": 6,
+    "downloads": 40,
     "files": [
-        "zir_ai/aa7_pixhawk_219.json"
+        "zir_ai/aa7_pixhawk_219.json",
+        "zir_bace/bd10_naza_219.json",
+        "zir_bace/ba5_pixhawk_219.json",
+        "zir_bace/bd7_betaflight_219.json",
+        "zir_bace/bd15_ardupilot_477.json",
+        "zir_bace/bd10_kiss_477.json",
+        "zir_bace/ba7_betaflight_477.json",
+        "zir_bace/bd5_dji_477.json",
+        "zir_bace/ba7_pixhawk_219.json",
+        "zir_bace/ba10_ardupilot_477.json",
+        "zir_bace/ba15_naza_219.json",
+        "zir_plane/pa10_ardupilot_477.json",
+        "zir_plane/pd5_dji_477.json",
+        "zir_plane/pd7_betaflight_219.json",
+        "zir_plane/pd15_ardupilot_477.json",
+        "zir_plane/pd10_kiss_477.json",
+        "zir_plane/pa5_pixhawk_219.json",
+        "zir_plane/pa15_naza_219.json",
+        "zir_plane/pa7_betaflight_477.json",
+        "zir_plane/pa7_pixhawk_219.json",
+        "zir_plane/pd10_naza_219.json",
+        "zir_ai/aa15_naza_219.json",
+        "zir_ai/aa10_ardupilot_477.json",
+        "zir_ai/ad10_kiss_477.json",
+        "zir_ai/ad7_betaflight_219.json",
+        "zir_ai/aa7_betaflight_477.json",
+        "zir_ai/ad10_naza_219.json",
+        "zir_ai/aa5_pixhawk_219.json",
+        "zir_ai/ad15_ardupilot_477.json",
+        "zir_ai/ad5_dji_477.json"
     ],
-    "last_download": "2025-03-07T16:12:01.917084"
+    "last_download": "2025-03-09T14:05:41.370748"
 }
